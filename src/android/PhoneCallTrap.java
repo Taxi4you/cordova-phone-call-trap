@@ -15,11 +15,12 @@ import org.json.JSONArray;
 public class PhoneCallTrap extends CordovaPlugin {
 
     CallStateListener listener;
+    
+    private static final int READ_CALL_LOG_REQ_CODE = 0;
 
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         
         if (!cordova.hasPermission(READ_CALL_LOG)) {
-            Log.d(TAG, "No permissions, will request");
             cordova.requestPermission(this, READ_CALL_LOG_REQ_CODE,
                     READ_CALL_LOG);
             return true;
