@@ -6,6 +6,7 @@ import org.apache.cordova.PluginResult;
 import android.content.Context;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import static android.Manifest.permission.READ_CALL_LOG;
 
 import org.json.JSONException;
 import org.json.JSONArray;
