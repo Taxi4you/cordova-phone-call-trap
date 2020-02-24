@@ -18,14 +18,21 @@ public class PhoneCallTrap extends CordovaPlugin {
     
     private static final int READ_CALL_LOG_REQ_CODE = 0;
     private static final int WRITE_CALL_LOG_REQ_CODE = 0;
+    
+    public static final String READ_CALL_LOG =
+        android.Manifest.permission.READ_CALL_LOG;
+    public static final String WRITE_CALL_LOG =
+        android.Manifest.permission.WRITE_CALL_LOG;
 
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         
         if (!cordova.hasPermission(READ_CALL_LOG)) {
             cordova.requestPermission(this, READ_CALL_LOG_REQ_CODE,
                     READ_CALL_LOG);
+        }
+        if (!cordova.hasPermission(WRITE_CALL_LOG)) {
             cordova.requestPermission(this, WRITE_CALL_LOG_REQ_CODE,
-                    WRITE_CALL_LOG);
+                    WRITE_CALL_LOG);   
         }
         
         prepareListener();
