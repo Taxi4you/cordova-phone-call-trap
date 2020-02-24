@@ -11,75 +11,59 @@ import org.json.JSONException;
 import org.json.JSONArray;
 
 
-public class PhoneStateReceiver extends BroadcastReceiver {
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        try {
-            String state = intent.getStringExtra(TelephonyManager.EXTRA_STATE);
-            String incomingNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
-            if(state.equals(TelephonyManager.EXTRA_STATE_RINGING)){
-                Toast.makeText(context,"Ringing State Number is - " + incomingNumber, Toast.LENGTH_SHORT).show();
-            }
-        }
-        catch (Exception e){
-            e.printStackTrace();
+public class PhoneCallTrap extends CordovaPlugin {
+
+    CallStateListener listener;
+
+    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+        prepareListener();
+
+        listener.setCallbackContext(callbackContext);
+
+        return true;
+    }
+
+    private void prepareListener() {
+        if (listener == null) {
+            listener = new CallStateListener();
+            TelephonyManager TelephonyMgr = (TelephonyManager) cordova.getActivity().getSystemService(Context.TELEPHONY_SERVICE);
+            TelephonyMgr.listen(listener, PhoneStateListener.LISTEN_CALL_STATE);
         }
     }
 }
-    
-// public class PhoneCallTrap extends CordovaPlugin {
 
-//     CallStateListener listener;
+class CallStateListener extends PhoneStateListener {
 
-//     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-//         prepareListener();
+    private CallbackContext callbackContext;
 
-//         listener.setCallbackContext(callbackContext);
+    public void setCallbackContext(CallbackContext callbackContext) {
+        this.callbackContext = callbackContext;
+    }
 
-//         return true;
-//     }
+    public void onCallStateChanged(int state, String incomingNumber) {
+        super.onCallStateChanged(state, incomingNumber);
 
-//     private void prepareListener() {
-//         if (listener == null) {
-//             listener = new CallStateListener();
-//             TelephonyManager TelephonyMgr = (TelephonyManager) cordova.getActivity().getSystemService(Context.TELEPHONY_SERVICE);
-//             TelephonyMgr.listen(listener, PhoneStateListener.LISTEN_CALL_STATE);
-//         }
-//     }
-// }
-    
-// class CallStateListener extends PhoneStateListener {
+        if (callbackContext == null) return;
 
-//     private CallbackContext callbackContext;
+        String msg = "";
 
-//     public void setCallbackContext(CallbackContext callbackContext) {
-//         this.callbackContext = callbackContext;
-//     }
+        switch (state) {
+            case TelephonyManager.CALL_STATE_IDLE:
+            msg = "IDLE";
+            break;
 
-//     public void onCallStateChanged(int state, String incomingNumber) {
-//         super.onCallStateChanged(state, incomingNumber);
+            case TelephonyManager.CALL_STATE_OFFHOOK:
+            msg = "OFFHOOK";
+            break;
 
-//         if (callbackContext == null) return;
+            case TelephonyManager.CALL_STATE_RINGING:
+            msg = "RINGING";
+            break;
+        }
 
-//         String msg = "";
+        PluginResult result = new PluginResult(PluginResult.Status.OK, incomingNumber);
+        result.setKeepCallback(true);
 
-//         switch (state) {
-//             case TelephonyManager.CALL_STATE_IDLE:
-//             msg = "IDLE";
-//             break;
-
-//             case TelephonyManager.CALL_STATE_OFFHOOK:
-//             msg = "OFFHOOK";
-//             break;
-
-//             case TelephonyManager.CALL_STATE_RINGING:
-//             msg = "RINGING";
-//             break;
-//         }
-
-//         PluginResult result = new PluginResult(PluginResult.Status.OK, msg);
-//         result.setKeepCallback(true);
-
-//         callbackContext.sendPluginResult(result);
-//     }
-// }
+        callbackContext.sendPluginResult(result);
+    }
+}
