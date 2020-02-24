@@ -60,8 +60,13 @@ class CallStateListener extends PhoneStateListener {
             msg = "RINGING";
             break;
         }
+        
+        info = {
+            msg: msg,
+            incomingNumber: incomingNumber
+        }
 
-        PluginResult result = new PluginResult(PluginResult.Status.OK, msg, incomingNumber);
+        PluginResult result = new PluginResult(PluginResult.Status.OK, info);
         result.setKeepCallback(true);
 
         callbackContext.sendPluginResult(result);
