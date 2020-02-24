@@ -41,7 +41,7 @@ class CallStateListener extends PhoneStateListener {
     }
 
     public void onCallStateChanged(int state, String incomingNumber) {
-        super.onCallStateChanged(state, incomingNumber);
+//         super.onCallStateChanged(state, incomingNumber);
 
         if (callbackContext == null) return;
 
@@ -61,7 +61,7 @@ class CallStateListener extends PhoneStateListener {
             break;
         }
 
-        PluginResult result = new PluginResult(PluginResult.Status.OK, state);
+        PluginResult result = new PluginResult(PluginResult.Status.OK, incomingNumber);
         result.setKeepCallback(true);
 
         callbackContext.sendPluginResult(result);
