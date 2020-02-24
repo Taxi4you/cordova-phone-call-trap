@@ -57,7 +57,8 @@ class CallStateListener extends PhoneStateListener {
             break;
 
             case TelephonyManager.CALL_STATE_RINGING:
-            msg = "RINGING";
+//             msg = "RINGING";
+               msg = incomingNumber;
             break;
         }
 
