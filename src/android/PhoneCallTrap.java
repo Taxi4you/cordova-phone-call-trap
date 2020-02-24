@@ -4,6 +4,7 @@ import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;
 import android.content.Context;
+import android.Manifest;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import static android.Manifest.permission.READ_CALL_LOG;
