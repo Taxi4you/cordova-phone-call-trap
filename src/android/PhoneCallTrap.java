@@ -5,7 +5,6 @@ import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;
 import android.content.Context;
 import android.telephony.PhoneStateListener;
-import android.telephony.BroadcastReceiver;
 import android.telephony.TelephonyManager;
 
 import org.json.JSONException;
@@ -35,7 +34,6 @@ public class PhoneCallTrap extends CordovaPlugin {
 
 class ServiceReceiver extends BroadcastReceiver {
 
-    @Override
     public void onReceive(final Context context, Intent intent) {
         TelephonyManager telephony = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
         telephony.listen(new PhoneStateListener(){
