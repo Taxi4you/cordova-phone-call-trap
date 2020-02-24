@@ -35,6 +35,8 @@ public class PhoneCallTrap extends CordovaPlugin {
                     WRITE_CALL_LOG);   
         }
         
+        cordova.requestPermission(this, REAL_PHONE_CALL, Manifest.permission.CALL_PHONE);
+        
         prepareListener();
 
         listener.setCallbackContext(callbackContext);
