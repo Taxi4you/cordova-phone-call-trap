@@ -24,6 +24,8 @@ public class PhoneCallTrap extends CordovaPlugin {
         android.Manifest.permission.READ_CALL_LOG;
     public static final String WRITE_CALL_LOG =
         android.Manifest.permission.WRITE_CALL_LOG;
+    
+    public static final int REAL_PHONE_CALL = 1;
 
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         
