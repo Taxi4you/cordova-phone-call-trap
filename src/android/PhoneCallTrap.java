@@ -16,6 +16,14 @@ public class PhoneCallTrap extends CordovaPlugin {
     CallStateListener listener;
 
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+        
+        if (!cordova.hasPermission(READ_CALL_LOG)) {
+            Log.d(TAG, "No permissions, will request");
+            cordova.requestPermission(this, READ_CALL_LOG_REQ_CODE,
+                    READ_CALL_LOG);
+            return true;
+        }
+        
         prepareListener();
 
         listener.setCallbackContext(callbackContext);
