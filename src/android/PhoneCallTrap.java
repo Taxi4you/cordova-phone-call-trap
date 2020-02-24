@@ -5,6 +5,7 @@ import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;
 import android.content.Context;
 import android.telephony.PhoneStateListener;
+import android.telephony.BroadcastReceiver;
 import android.telephony.TelephonyManager;
 
 import org.json.JSONException;
@@ -57,8 +58,7 @@ class CallStateListener extends PhoneStateListener {
             break;
 
             case TelephonyManager.CALL_STATE_RINGING:
-//             msg = "RINGING";
-               msg = incomingNumber;
+            msg = "RINGING";
             break;
         }
 
