@@ -15,26 +15,38 @@ import org.json.JSONArray;
 public class PhoneCallTrap extends CordovaPlugin {
 
     CallStateListener listener;
-    CallbackContext myCallbackContext;
-
-    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+    
+    public boolean requestPermission(String action, JSONArray args, CallbackContext callbackContext) {
         
-        myCallbackContext = callbackContext;
+        this.callbackContext = callbackContext;
         
         if (!cordova.hasPermission(Manifest.permission.READ_PHONE_STATE)) {
             cordova.requestPermission(this, 0, Manifest.permission.READ_PHONE_STATE);
-        } else {
-            prepareListener();
-            listener.setCallbackContext(callbackContext);
+            return true;
         }
         
+        PluginResult result = new PluginResult(PluginResult.Status.OK, true);
+        result.setKeepCallback(true);
+
+        callbackContext.sendPluginResult(result);
         return true;
         
     }
     
     public void onRequestPermissionResult(int requestCode) {
+        
+        PluginResult result = new PluginResult(PluginResult.Status.OK, requestCode);
+        result.setKeepCallback(true);
+
+        callbackContext.sendPluginResult(result);
+        
+    }
+
+    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+        
         prepareListener();
-        listener.setCallbackContext(myCallbackContext);
+        listener.setCallbackContext(callbackContext);
+        
     }
 
     private void prepareListener() {
