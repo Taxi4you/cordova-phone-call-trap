@@ -15,14 +15,11 @@ import org.json.JSONArray;
 public class PhoneCallTrap extends CordovaPlugin {
 
     CallStateListener listener;
-    
-    constructor() {
-        this.callbackContext;   
-    }
+    CallbackContext callbackContext
 
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         
-        this.callbackContext = callbackContext;
+        callbackContext = callbackContext;
         
         if (!cordova.hasPermission(Manifest.permission.READ_PHONE_STATE)) {
             cordova.requestPermission(this, 0, Manifest.permission.READ_PHONE_STATE);
@@ -37,7 +34,7 @@ public class PhoneCallTrap extends CordovaPlugin {
     
     public void onRequestPermissionResult(int requestCode) {
         prepareListener();
-        listener.setCallbackContext(this.callbackContext);
+        listener.setCallbackContext(callbackContext);
     }
 
     private void prepareListener() {
