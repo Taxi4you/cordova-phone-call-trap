@@ -7,9 +7,9 @@ import android.content.Context;
 import android.Manifest;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
-import static android.Manifest.permission.READ_CALL_LOG;
-import static android.Manifest.permission.WRITE_CALL_LOG;
-import static android.Manifest.permission.READ_PHONE_STATE;
+// import static android.Manifest.permission.READ_CALL_LOG;
+// import static android.Manifest.permission.WRITE_CALL_LOG;
+// import static android.Manifest.permission.READ_PHONE_STATE;
 
 import org.json.JSONException;
 import org.json.JSONArray;
@@ -19,27 +19,32 @@ public class PhoneCallTrap extends CordovaPlugin {
 
     CallStateListener listener;
     
-    private static final int READ_CALL_LOG_REQ_CODE = 0;
-    private static final int WRITE_CALL_LOG_REQ_CODE = 0;
+//     private static final int READ_CALL_LOG_REQ_CODE = 0;
+//     private static final int WRITE_CALL_LOG_REQ_CODE = 0;
     private static final int READ_PHONE_STATE_REQ_CODE = 0;
     
-    public static final String READ_CALL_LOG =
-        android.Manifest.permission.READ_CALL_LOG;
-    public static final String WRITE_CALL_LOG =
-        android.Manifest.permission.WRITE_CALL_LOG;
+//     public static final String READ_CALL_LOG =
+//         android.Manifest.permission.READ_CALL_LOG;
+//     public static final String WRITE_CALL_LOG =
+//         android.Manifest.permission.WRITE_CALL_LOG;
     public static final String READ_PHONE_STATE =
         android.Manifest.permission.READ_PHONE_STATE;
 
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         
-        cordova.requestPermission(this, READ_CALL_LOG_REQ_CODE,
-                    READ_CALL_LOG);
+//         cordova.requestPermission(this, READ_CALL_LOG_REQ_CODE,
+//                     READ_CALL_LOG);
 
-        cordova.requestPermission(this, WRITE_CALL_LOG_REQ_CODE,
-                    WRITE_CALL_LOG);   
+//         cordova.requestPermission(this, WRITE_CALL_LOG_REQ_CODE,
+//                     WRITE_CALL_LOG);   
+      
+//         cordova.requestPermission(this, READ_PHONE_STATE_REQ_CODE,
+//                     READ_PHONE_STATE);   
         
-        cordova.requestPermission(this, READ_PHONE_STATE_REQ_CODE,
-                    READ_PHONE_STATE);   
+        if (!cordova.hasPermission(Manifest.permission.READ_PHONE_STATE)) {
+            cordova.requestPermission(this, 0, Manifest.permission.READ_PHONE_STATE);
+        }
+        
         
         
         prepareListener();
