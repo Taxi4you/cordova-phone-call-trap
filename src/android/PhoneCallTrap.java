@@ -20,7 +20,7 @@ public class PhoneCallTrap extends CordovaPlugin {
         this.callbackContext;   
     }
 
-    public void execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         
         this.callbackContext = callbackContext;
         
@@ -30,6 +30,8 @@ public class PhoneCallTrap extends CordovaPlugin {
             prepareListener();
             listener.setCallbackContext(callbackContext);
         }
+        
+        return true;
         
     }
     
