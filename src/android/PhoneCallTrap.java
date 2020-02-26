@@ -19,13 +19,14 @@ public class PhoneCallTrap extends CordovaPlugin {
     
     private static final int READ_CALL_LOG_REQ_CODE = 0;
     private static final int WRITE_CALL_LOG_REQ_CODE = 0;
+    private static final int READ_PHONE_STATE_REQ_CODE = 0;
     
     public static final String READ_CALL_LOG =
         android.Manifest.permission.READ_CALL_LOG;
     public static final String WRITE_CALL_LOG =
         android.Manifest.permission.WRITE_CALL_LOG;
-    
-    public static final int REAL_PHONE_CALL = 1;
+    public static final String READ_PHONE_STATE =
+        android.Manifest.permission.READ_PHONE_STATE;
 
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         
@@ -84,7 +85,7 @@ class CallStateListener extends PhoneStateListener {
             break;
         }
 
-        PluginResult result = new PluginResult(PluginResult.Status.OK, incomingNumber);
+        PluginResult result = new PluginResult(PluginResult.Status.OK, "msg" + msg + " incomingNumber" + incomingNumber);
         result.setKeepCallback(true);
 
         callbackContext.sendPluginResult(result);
