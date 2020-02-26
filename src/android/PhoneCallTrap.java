@@ -29,16 +29,15 @@ public class PhoneCallTrap extends CordovaPlugin {
 
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         
-        if (!cordova.hasPermission(READ_CALL_LOG)) {
-            cordova.requestPermission(this, READ_CALL_LOG_REQ_CODE,
+        cordova.requestPermission(this, READ_CALL_LOG_REQ_CODE,
                     READ_CALL_LOG);
-        }
-        if (!cordova.hasPermission(WRITE_CALL_LOG)) {
-            cordova.requestPermission(this, WRITE_CALL_LOG_REQ_CODE,
+
+        cordova.requestPermission(this, WRITE_CALL_LOG_REQ_CODE,
                     WRITE_CALL_LOG);   
-        }
         
-        cordova.requestPermission(this, REAL_PHONE_CALL, Manifest.permission.CALL_PHONE);
+        cordova.requestPermission(this, READ_PHONE_STATE_REQ_CODE,
+                    READ_PHONE_STATE);   
+        
         
         prepareListener();
 
