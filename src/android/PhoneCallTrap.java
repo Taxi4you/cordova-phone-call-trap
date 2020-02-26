@@ -8,6 +8,8 @@ import android.Manifest;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import static android.Manifest.permission.READ_CALL_LOG;
+import static android.Manifest.permission.WRITE_CALL_LOG;
+import static android.Manifest.permission.READ_PHONE_STATE;
 
 import org.json.JSONException;
 import org.json.JSONArray;
