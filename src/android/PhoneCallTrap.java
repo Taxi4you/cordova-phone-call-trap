@@ -18,10 +18,10 @@ public class PhoneCallTrap extends CordovaPlugin {
 
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         
-        if (!cordova.hasPermission(Manifest.permission.READ_PHONE_STATE)) {
-            cordova.requestPermission(this, 0, Manifest.permission.READ_PHONE_STATE);
-            return true;
-        }
+//         if (!cordova.hasPermission(Manifest.permission.READ_PHONE_STATE)) {
+//             cordova.requestPermission(this, 0, Manifest.permission.READ_PHONE_STATE);
+//             return true;
+//         }
         
         prepareListener();
         listener.setCallbackContext(callbackContext);
@@ -56,19 +56,19 @@ class CallStateListener extends PhoneStateListener {
 
         switch (state) {
             case TelephonyManager.CALL_STATE_IDLE:
-            msg = "IDLE";
+            msg = "IDLE|" + incomingNumber;
             break;
 
             case TelephonyManager.CALL_STATE_OFFHOOK:
-            msg = "OFFHOOK";
+            msg = "OFFHOOK|" + incomingNumber;
             break;
 
             case TelephonyManager.CALL_STATE_RINGING:
-            msg = "RINGING";
+            msg = "RINGING|" + incomingNumber;
             break;
         }
 
-        PluginResult result = new PluginResult(PluginResult.Status.OK, "msg" + msg + " incomingNumber" + incomingNumber);
+        PluginResult result = new PluginResult(PluginResult.Status.OK, msg);
         result.setKeepCallback(true);
 
         callbackContext.sendPluginResult(result);
