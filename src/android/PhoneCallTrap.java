@@ -22,7 +22,12 @@ public class PhoneCallTrap extends CordovaPlugin {
             cordova.requestPermission(this, 0, Manifest.permission.READ_CALL_LOG);
             return true;
         }
-        
+        if (!cordova.hasPermission(Manifest.permission.READ_CONTACTS)) {
+            cordova.requestPermission(this, 0, Manifest.permission.READ_CONTACTS);
+            return true;
+        }
+       
+          
         prepareListener();
         listener.setCallbackContext(callbackContext);
         
